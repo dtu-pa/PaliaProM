@@ -13,6 +13,7 @@
 		<!-- Please put every ProM dependency on a single line. -->
 		<!-- ProM framework. -->
 		<dependency org="prom" name="ProM-Plugins" rev="latest" changing="true" transitive="true" />
+		<dependency org="prom" name="XESLite" rev="latest" changing="true" transitive="true" />
 		<!-- ProM packages. -->
 		<dependency org="prom" name="BasicUtils" rev="latest" changing="true" transitive="true" />
 		<dependency org="prom" name="Widgets" rev="latest" changing="true" transitive="true" />
