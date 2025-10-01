@@ -20,6 +20,6 @@
 		<dependency org="prom" name="BPMNVisualizer" rev="latest" changing="true" transitive="true" />
 		<dependency org="prom" name="GraphViz" rev="latest" changing="true" transitive="true" />
 		<!-- Github package from JitPack -->
-		<dependency org="com.github.delas" name="palia" rev="b9b1323d0b" changing="true" transitive="true" />
+		<dependency org="com.github.delas" name="palia" rev="f87ca504ab" changing="true" transitive="true" />
 	</dependencies>
 </ivy-module>

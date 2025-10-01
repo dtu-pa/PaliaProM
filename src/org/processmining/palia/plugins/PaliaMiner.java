@@ -18,6 +18,7 @@ import org.processmining.models.graphbased.directed.bpmn.elements.Event.EventTyp
 import org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType;
 
 import palia.algorithm.Palia;
+import palia.algorithm.TransitionsMergeMode;
 import palia.model.Node;
 import palia.model.TPA;
 import palia.model.Transition;
@@ -42,12 +43,7 @@ public class PaliaMiner {
 		context.getProgress().setMaximum(9);
 		
 		Palia p = new Palia();
-		TPA tpa = p.mine(log, (status, hasStarted) -> {
-			context.getProgress().setCaption(status.toString());
-			if (!hasStarted) {
-				context.getProgress().setValue(context.getProgress().getValue() + 1);
-			}
-		});
+		TPA tpa = p.mine(log, TransitionsMergeMode.Extrict);
 		return convert(tpa);
 	}
 
@@ -60,7 +56,7 @@ public class PaliaMiner {
 		Map<UUID, BPMNNode> idToStartNodes = new HashMap<>();
 		Map<UUID, BPMNNode> idToTargetNodes = new HashMap<>();
 		
-		for (Node n : tpa.getNodes()) {
+		for (Node n : tpa.iterateNodes()) {
 			BPMNNode activityNode = diagram.addActivity(n.getName(), false, false, false, false, false);
 			idToStartNodes.put(n.getId(), activityNode);
 			idToTargetNodes.put(n.getId(), activityNode);
@@ -73,7 +69,7 @@ public class PaliaMiner {
 			}
 		}
 		
-		for (Node n : tpa.getNodes()) {
+		for (Node n : tpa.iterateNodes()) {
 			Set<Transition> outgoing = n.getOutTransitions(false);
 			if (outgoing.size() > 1) {
 				BPMNNode gateway = diagram.addGateway(null, GatewayType.DATABASED);
@@ -89,7 +85,7 @@ public class PaliaMiner {
 			}
 		}
 		
-		for (Transition t : tpa.getTransitions()) {
+		for (Transition t : tpa.iterateTransitions()) {
 			Collection<Node> sources = t.getSourceNodes();
 			Collection<Node> targets = t.getEndNodes();
 
